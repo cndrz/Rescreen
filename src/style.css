@@ -45,8 +45,9 @@ body {
     background: var(--bg-gradient);
     min-height: 100vh;
     color: var(--glass-text);
-    padding: 1rem 0;
+    padding: 3rem 0;
     overflow-x: hidden;
+    line-height: 1.6;
 }
 
 /* Background elements for glass effect depth */
@@ -75,18 +76,18 @@ body::after {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 3rem;
 }
 
 .content-sm {
-    max-width: 720px;
+    max-width: 840px;
 }
 
 /* Header */
 header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 3rem;
 }
 
 header nav {
@@ -139,14 +140,14 @@ header .logo-text {
 /* Hero */
 #hero {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 3.5rem;
 }
 
 #hero h1 {
     font-size: 2.25rem;
     font-weight: 800;
     letter-spacing: -0.04em;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.75rem;
     color: #1a1a1a;
 }
 
@@ -159,12 +160,18 @@ header .logo-text {
 .minimal-input-stack {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 2.5rem;
 }
 
 .input-row {
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
+    align-items: stretch;
+}
+
+.input-row > .section-group {
+    flex: 1;
+    min-width: 0;
 }
 
 .flex-1 {
@@ -208,7 +215,7 @@ header .logo-text {
     backdrop-filter: blur(var(--blur));
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
-    padding: 1.25rem;
+    padding: 2rem;
     box-shadow: var(--shadow);
     transition: var(--transition);
 }
@@ -250,9 +257,41 @@ header .logo-text {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255, 255, 255, 0.3);
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 0.875rem 1.25rem;
+    border-radius: 12px;
+    width: 100%;
+    border: 1px solid var(--glass-border);
+    gap: 1rem;
+}
+
+.file-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+}
+
+.btn-remove {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 0.4rem 0.8rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.btn-remove:hover {
+    background: #ef4444;
+    color: white;
 }
 
 .minimal-textarea {
@@ -360,13 +399,22 @@ header .logo-text {
 }
 
 .modal-content {
-    width: 90%;
-    max-width: 600px;
-    padding: 2.5rem;
+    width: 95%;
+    max-width: 700px;
+    padding: 3rem;
     max-height: 90vh;
     overflow-y: auto;
     transform: translateY(0);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-content::-webkit-scrollbar {
+    display: none;
+}
+
+.modal-content {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .modal.hidden .modal-content {
@@ -421,10 +469,10 @@ header .logo-text {
 
 .step {
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem;
     align-items: flex-start;
     background: rgba(255, 255, 255, 0.2);
-    padding: 1.25rem;
+    padding: 1.5rem;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -456,7 +504,7 @@ header .logo-text {
 
 /* Glassmorphic Analyze Button */
 .action-section {
-    margin-top: 1.5rem;
+    margin-top: 3rem;
     text-align: center;
 }
 

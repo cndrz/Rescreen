@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rescreen | AI Resume Analyzer</title>
-    <meta name="description" content="AI-powered resume analyzer to help you optimize your resume and match it against job descriptions.">
+    <meta name="description"
+        content="AI-powered resume analyzer to help you optimize your resume and match it against job descriptions.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/style.css">
 </head>
+
 <body>
     <div id="app">
         <header>
@@ -32,12 +35,17 @@
                     <button class="close-modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Rescreen is an AI-powered resume analyzer built to help you refine your professional profile. We use advanced LLMs to provide instant, actionable feedback.</p>
+                    <p>Rescreen is an AI-powered resume analyzer built to help you refine your professional profile. We
+                        use advanced LLMs to provide instant, actionable feedback.</p>
                     <div class="about-details">
                         <h3>Why Rescreen?</h3>
-                        <p>We believe everyone deserves constructive feedback on their resume. By utilizing advanced AI, we ensure that you get personalized recommendations to stand out in the competitive job market.</p>
+                        <p>We believe everyone deserves constructive feedback on their resume. By utilizing advanced AI,
+                            we ensure that you get personalized recommendations to stand out in the competitive job
+                            market.</p>
                         <h3>Privacy First</h3>
-                        <p>This tool is built as a lightweight, privacy-focused application. Your resume data is processed on the fly and only sent securely for analysis. We do not store your personal data.</p>
+                        <p>This tool is built as a lightweight, privacy-focused application. Your resume data is
+                            processed on the fly and only sent securely for analysis. We do not store your personal
+                            data.</p>
                     </div>
                 </div>
             </div>
@@ -92,29 +100,6 @@
 
             <section id="analyzer-container">
                 <div class="minimal-input-stack">
-                    <div class="input-row">
-                        <!-- Resume Section -->
-                        <div class="section-group flex-1 d-flex-col">
-                            <h3 class="section-label">1. Resume</h3>
-                            <div class="upload-minimal flex-1 flex-center" id="drop-zone">
-                                <input type="file" id="resume-upload" accept=".pdf" hidden>
-                                <div class="upload-content">
-                                    <span class="upload-label">Drop PDF or <button class="btn-text" id="browse-btn">select</button></span>
-                                </div>
-                                <div class="file-info hidden" id="file-info">
-                                    <span class="file-name">filename.pdf</span>
-                                    <button class="btn-remove" id="remove-file">remove</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Job Description Section -->
-                        <div class="section-group flex-1 jd-group">
-                            <h3 class="section-label">2. Job Description <span class="badge">Optional</span></h3>
-                            <textarea id="job-description" placeholder="Target job description for matching..." class="minimal-textarea secondary"></textarea>
-                        </div>
-                    </div>
-
                     <!-- Config Area (Buttons instead of dropdowns) -->
                     <div class="section-group config-section">
                         <div class="config-row-buttons">
@@ -135,6 +120,31 @@
                                     <button class="toggle-btn" data-value="promotion">Promo</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <!-- Resume Section -->
+                        <div class="section-group flex-1 d-flex-col">
+                            <h3 class="section-label">1. Resume</h3>
+                            <div class="upload-minimal flex-1 flex-center" id="drop-zone">
+                                <input type="file" id="resume-upload" accept=".pdf" hidden>
+                                <div class="upload-content">
+                                    <span class="upload-label">Drop PDF or <button class="btn-text"
+                                            id="browse-btn">select</button></span>
+                                </div>
+                                <div class="file-info hidden" id="file-info">
+                                    <span class="file-name">filename.pdf</span>
+                                    <button class="btn-remove" id="remove-file">remove</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Description Section -->
+                        <div class="section-group flex-1 jd-group">
+                            <h3 class="section-label">2. Job Description <span class="badge">Optional</span></h3>
+                            <textarea id="job-description" placeholder="Target job description for matching..."
+                                class="minimal-textarea secondary"></textarea>
                         </div>
                     </div>
                 </div>
@@ -161,7 +171,7 @@
                         <h3 class="group-title">Strengths</h3>
                         <div id="strengths-list" class="minimal-list"></div>
                     </div>
-                    
+
                     <div class="feedback-group">
                         <h3 class="group-title">Refinements</h3>
                         <div id="weaknesses-list" class="minimal-list"></div>
@@ -185,4 +195,5 @@
     </div>
     <script type="module" src="/src/main.js"></script>
 </body>
+
 </html>
