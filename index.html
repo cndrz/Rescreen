@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rescreen | AI Resume Analyzer</title>
+    <meta name="description" content="AI-powered resume analyzer to help you optimize your resume and match it against job descriptions.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <nav class="container content-sm">
+                <div class="logo">
+                    <span class="logo-text">rescreen</span>
+                </div>
+                <div class="nav-actions">
+                    <button id="about-btn" class="nav-btn">about</button>
+                    <button id="help-btn" class="nav-btn">help</button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Modals -->
+        <div id="about-modal" class="modal hidden">
+            <div class="modal-content glass-panel about-content">
+                <div class="modal-header">
+                    <h2>About Rescreen</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Rescreen is an AI-powered resume analyzer built to help you refine your professional profile. We use advanced LLMs to provide instant, actionable feedback.</p>
+                    <div class="about-details">
+                        <h3>Why Rescreen?</h3>
+                        <p>We believe everyone deserves constructive feedback on their resume. By utilizing advanced AI, we ensure that you get personalized recommendations to stand out in the competitive job market.</p>
+                        <h3>Privacy First</h3>
+                        <p>This tool is built as a lightweight, privacy-focused application. Your resume data is processed on the fly and only sent securely for analysis. We do not store your personal data.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="help-modal" class="modal hidden">
+            <div class="modal-content glass-panel help-content">
+                <div class="modal-header">
+                    <h2>Help & Guide</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="step-guide">
+                        <div class="step">
+                            <div class="step-num">1</div>
+                            <div class="step-text">
+                                <h3>Upload</h3>
+                                <p>Drag and drop your PDF into the upload area.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">2</div>
+                            <div class="step-text">
+                                <h3>Job Description (Optional)</h3>
+                                <p>Paste the target role's description for tailored feedback.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">3</div>
+                            <div class="step-text">
+                                <h3>Preferences</h3>
+                                <p>Set your feedback depth and primary career goal.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">4</div>
+                            <div class="step-text">
+                                <h3>Analyze</h3>
+                                <p>Click Analyze to instantly receive actionable insights.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="container content-sm">
+            <section id="hero">
+                <h1>Refine your career path.</h1>
+                <p class="subtitle">An AI-powered mirror for your professional profile.</p>
+            </section>
+
+            <section id="analyzer-container">
+                <div class="minimal-input-stack">
+                    <div class="input-row">
+                        <!-- Resume Section -->
+                        <div class="section-group flex-1 d-flex-col">
+                            <h3 class="section-label">1. Resume</h3>
+                            <div class="upload-minimal flex-1 flex-center" id="drop-zone">
+                                <input type="file" id="resume-upload" accept=".pdf" hidden>
+                                <div class="upload-content">
+                                    <span class="upload-label">Drop PDF or <button class="btn-text" id="browse-btn">select</button></span>
+                                </div>
+                                <div class="file-info hidden" id="file-info">
+                                    <span class="file-name">filename.pdf</span>
+                                    <button class="btn-remove" id="remove-file">remove</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job Description Section -->
+                        <div class="section-group flex-1 jd-group">
+                            <h3 class="section-label">2. Job Description <span class="badge">Optional</span></h3>
+                            <textarea id="job-description" placeholder="Target job description for matching..." class="minimal-textarea secondary"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Config Area (Buttons instead of dropdowns) -->
+                    <div class="section-group config-section">
+                        <div class="config-row-buttons">
+                            <div class="config-item">
+                                <label>Depth</label>
+                                <div class="button-group" id="depth-group">
+                                    <button class="toggle-btn" data-value="brief">Brief</button>
+                                    <button class="toggle-btn active" data-value="standard">Standard</button>
+                                    <button class="toggle-btn" data-value="detailed">Detailed</button>
+                                </div>
+                            </div>
+                            <div class="config-item">
+                                <label>Goal</label>
+                                <div class="button-group" id="goal-group">
+                                    <button class="toggle-btn active" data-value="general">General</button>
+                                    <button class="toggle-btn" data-value="switch">Switch</button>
+                                    <button class="toggle-btn" data-value="entry">Entry</button>
+                                    <button class="toggle-btn" data-value="promotion">Promo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <button id="analyze-btn" class="btn-minimal">
+                        <span class="btn-spinner hidden"></span>
+                        <span class="btn-text">Analyze</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Results Section (Hidden Initially) -->
+            <section id="results" class="hidden">
+                <div class="results-header-minimal">
+                    <div class="score-pill">
+                        <span class="score-value" id="match-score">0%</span>
+                        <span class="score-label">Match</span>
+                    </div>
+                </div>
+
+                <div class="feedback-stack">
+                    <div class="feedback-group">
+                        <h3 class="group-title">Strengths</h3>
+                        <div id="strengths-list" class="minimal-list"></div>
+                    </div>
+                    
+                    <div class="feedback-group">
+                        <h3 class="group-title">Refinements</h3>
+                        <div id="weaknesses-list" class="minimal-list"></div>
+                    </div>
+
+                    <div id="detailed-feedback" class="detail-grid"></div>
+                </div>
+
+                <div class="results-actions">
+                    <button id="copy-btn" class="btn-text">copy analysis</button>
+                    <button id="reset-btn" class="btn-text">clear</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 Rescreen AI. Built with Vite & Groq.</p>
+            </div>
+        </footer>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

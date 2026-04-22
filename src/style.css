@@ -1,0 +1,626 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-text: #1a1a1a;
+    --accents-primary: #4f46e5;
+    --accents-secondary: #818cf8;
+    --radius: 20px;
+    --blur: 16px;
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(79, 70, 229, 0.4) transparent;
+}
+
+/* Custom Scrollbars for Webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(79, 70, 229, 0.4);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(79, 70, 229, 0.7);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    color: var(--glass-text);
+    padding: 1rem 0;
+    overflow-x: hidden;
+}
+
+/* Background elements for glass effect depth */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(80px);
+    opacity: 0.5;
+}
+
+body::before {
+    top: 5%;
+    left: 10%;
+    background: #4f46e5;
+}
+
+body::after {
+    bottom: 10%;
+    right: 10%;
+    background: #818cf8;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.content-sm {
+    max-width: 720px;
+}
+
+/* Header */
+header {
+    margin-bottom: 1.5rem;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #4f46e5, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--glass-text);
+    padding: 0.4rem 1rem;
+    border-radius: 99px;
+    font-family: inherit;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Glass Card Base */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* Hero */
+#hero {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+#hero h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 0.25rem;
+    color: #1a1a1a;
+}
+
+#hero .subtitle {
+    font-size: 1rem;
+    color: var(--accents-6);
+}
+
+/* Input Stack */
+.minimal-input-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.input-row {
+    display: flex;
+    gap: 2rem;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.d-flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--glass-text);
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge {
+    font-size: 0.65rem;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    letter-spacing: normal;
+}
+
+.section-group {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.upload-minimal {
+    border: 2px dashed rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    transition: var(--transition);
+}
+
+.upload-minimal.active {
+    border-color: var(--accents-primary);
+    background: rgba(79, 70, 229, 0.05);
+}
+
+.upload-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: var(--accents-primary);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.btn-text:hover {
+    opacity: 0.8;
+}
+
+.file-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+}
+
+.minimal-textarea {
+    width: 100%;
+    min-height: 120px;
+    background: transparent;
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 1rem;
+    font-family: inherit;
+    font-size: 0.9375rem;
+    outline: none;
+    resize: vertical;
+}
+
+.minimal-textarea.secondary {
+    min-height: 120px;
+    border-top: none;
+    padding-top: 0;
+}
+
+.minimal-config {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.config-section {
+    padding: 1.25rem;
+}
+
+.config-row-buttons {
+    display: flex;
+    gap: 3rem;
+}
+
+.config-item {
+    flex: 1;
+}
+
+.config-item label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--glass-text);
+    margin-bottom: 0.75rem;
+}
+
+.button-group {
+    display: flex;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 0.25rem;
+    gap: 0.25rem;
+}
+
+.toggle-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 0.6rem 0.5rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--glass-text);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.toggle-btn.active {
+    background: white;
+    color: var(--accents-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 600px;
+    padding: 2.5rem;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal.hidden .modal-content {
+    transform: translateY(20px);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--glass-text);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    cursor: pointer;
+    color: var(--glass-text);
+    transition: var(--transition);
+}
+
+.close-modal:hover {
+    color: var(--error);
+}
+
+.modal-body h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--glass-text);
+    margin: 1.5rem 0 0.5rem;
+}
+
+.modal-body p {
+    font-size: 0.9375rem;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.step-guide {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 1.25rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.step-num {
+    background: linear-gradient(135deg, var(--accents-primary) 0%, var(--accents-secondary) 100%);
+    color: white;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 800;
+}
+
+.step-text h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1rem;
+}
+
+.step-text p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--accents-6);
+}
+
+/* Glassmorphic Analyze Button */
+.action-section {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.btn-minimal {
+    background: linear-gradient(135deg, var(--accents-primary) 0%, var(--accents-secondary) 100%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 3rem;
+    border-radius: 99px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.btn-minimal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(79, 70, 229, 0.3);
+}
+
+.btn-minimal:active {
+    transform: translateY(0);
+}
+
+/* Results Section */
+#results {
+    margin-top: 4rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 3rem;
+    box-shadow: var(--shadow);
+    animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.score-pill {
+    background: rgba(255, 255, 255, 0.4);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 2.5rem;
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    margin-bottom: 3rem;
+}
+
+.score-value {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--accents-primary);
+    line-height: 1;
+}
+
+.feedback-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.group-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 800;
+    color: var(--accents-primary);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.minimal-list div {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    font-size: 0.9375rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.result-section-card {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.results-actions {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.btn-text {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accents-5);
+    transition: var(--transition);
+}
+
+.btn-text:hover {
+    color: var(--accents-primary);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Footer & Copyright */
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+}
+
+footer p {
+    font-size: 0.75rem;
+    color: var(--glass-text);
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.25rem !important;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .input-row {
+        flex-direction: column;
+    }
+
+    .config-row-buttons {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
