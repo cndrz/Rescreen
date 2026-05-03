@@ -21,6 +21,8 @@
                     <span class="logo-text">rescreen</span>
                 </div>
                 <div class="nav-actions">
+                    <button id="nav-analyzer" class="nav-btn active-nav">analyzer</button>
+                    <button id="nav-generator" class="nav-btn">generator</button>
                     <button id="about-btn" class="nav-btn">about</button>
                     <button id="help-btn" class="nav-btn">help</button>
                 </div>
@@ -93,7 +95,8 @@
         </div>
 
         <main class="container content-sm">
-            <section id="hero">
+            <div id="analyzer-view" class="view">
+                <section id="hero">
                 <h1>Refine your career path.</h1>
                 <p class="subtitle">An AI-powered mirror for your professional profile.</p>
             </section>
@@ -185,7 +188,52 @@
                     <button id="reset-btn" class="btn-text">clear</button>
                 </div>
             </section>
-        </main>
+        </div> <!-- End Analyzer View -->
+
+        <div id="generator-view" class="view hidden">
+            <section id="generator-hero">
+                <h1>Generate your target.</h1>
+                <p class="subtitle">Select an industry and role to create a professional description.</p>
+            </section>
+
+            <section id="generator-container" class="section-group">
+                <div class="generator-steps">
+                    <div class="gen-step" id="industry-step">
+                        <h3 class="section-label">1. Industry</h3>
+                        <div id="industry-grid" class="selection-grid">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="gen-step hidden" id="role-step">
+                        <h3 class="section-label">2. Job Role</h3>
+                        <div id="role-grid" class="selection-grid">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="custom-role-input">
+                            <input type="text" id="custom-role" placeholder="Or type a custom role...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <button id="generate-jd-btn" class="btn-minimal">
+                        <span class="btn-spinner hidden"></span>
+                        <span class="btn-text">Generate Description</span>
+                    </button>
+                </div>
+
+                <div id="generated-result" class="hidden">
+                    <h3 class="section-label">Generated Description</h3>
+                    <textarea id="generated-jd-text" class="minimal-textarea" readonly></textarea>
+                    <div class="results-actions">
+                        <button id="use-jd-btn" class="btn-minimal">Use this Description</button>
+                        <button id="reset-gen-btn" class="btn-text">start over</button>
+                    </div>
+                </div>
+            </section>
+        </div> <!-- End Generator View -->
+    </main>
 
         <footer>
             <div class="container">

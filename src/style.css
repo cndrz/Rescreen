@@ -148,6 +148,12 @@ header .logo-text {
     border-color: rgba(255, 255, 255, 0.4);
 }
 
+.nav-btn.active-nav {
+    background: white;
+    color: var(--accents-primary);
+    border-color: white;
+}
+
 /* Glass Card Base */
 .glass-panel {
     background: var(--glass-bg);
@@ -172,9 +178,23 @@ header .logo-text {
     color: #1a1a1a;
 }
 
-#hero .subtitle {
+#hero .subtitle,
+#generator-hero .subtitle {
     font-size: 1rem;
     color: var(--accents-6);
+}
+
+#generator-hero {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+#generator-hero h1 {
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 0.75rem;
+    color: #1a1a1a;
 }
 
 /* Input Stack */
@@ -394,6 +414,95 @@ header .logo-text {
     background: white;
     color: var(--accents-primary);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Generator Specific */
+.generator-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.selection-card {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+}
+
+.selection-card:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.selection-card.active {
+    background: var(--accents-primary);
+    color: white;
+    border-color: var(--accents-primary);
+    box-shadow: 0 8px 16px rgba(79, 70, 229, 0.2);
+}
+
+.custom-role-input {
+    margin-top: 1.5rem;
+}
+
+.custom-role-input input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--glass-border);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.9375rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.custom-role-input input:focus {
+    background: white;
+    border-color: var(--accents-primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+#generated-result {
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+#generated-jd-text {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    min-height: 300px;
+    font-size: 0.875rem;
+    line-height: 1.7;
+}
+
+.view {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Modals */

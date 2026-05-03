@@ -11,6 +11,18 @@ const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 let selectedFile = null;
 let resumeText = '';
 
+// Generator State
+let selectedIndustry = null;
+let selectedRole = null;
+
+const industryData = {
+    'Tech': ['Software Engineer', 'Data Scientist', 'Product Manager', 'DevOps Engineer', 'UI/UX Designer', 'Cybersecurity Analyst'],
+    'Healthcare': ['Registered Nurse', 'Medical Assistant', 'Pharmacist', 'Healthcare Administrator', 'Physical Therapist'],
+    'Finance': ['Financial Analyst', 'Accountant', 'Investment Banker', 'Loan Officer', 'Risk Manager'],
+    'Education': ['Teacher', 'Academic Advisor', 'Instructional Designer', 'Education Consultant'],
+    'Creative': ['Graphic Designer', 'Content Writer', 'Video Editor', 'Marketing Specialist', 'Art Director']
+};
+
 // DOM Elements
 const dropZone = document.getElementById('drop-zone');
 const resumeUpload = document.getElementById('resume-upload');
@@ -41,6 +53,23 @@ const helpBtn = document.getElementById('help-btn');
 const aboutModal = document.getElementById('about-modal');
 const helpModal = document.getElementById('help-modal');
 const closeBtns = document.querySelectorAll('.close-modal');
+
+// Navigation & Views
+const navAnalyzer = document.getElementById('nav-analyzer');
+const navGenerator = document.getElementById('nav-generator');
+const analyzerView = document.getElementById('analyzer-view');
+const generatorView = document.getElementById('generator-view');
+
+// Generator Elements
+const industryGrid = document.getElementById('industry-grid');
+const roleStep = document.getElementById('role-step');
+const roleGrid = document.getElementById('role-grid');
+const customRoleInput = document.getElementById('custom-role');
+const generateJdBtn = document.getElementById('generate-jd-btn');
+const generatedResult = document.getElementById('generated-result');
+const generatedJdText = document.getElementById('generated-jd-text');
+const useJdBtn = document.getElementById('use-jd-btn');
+const resetGenBtn = document.getElementById('reset-gen-btn');
 
 // --- Event Listeners ---
 
@@ -125,6 +154,22 @@ document.querySelectorAll('.modal').forEach(modal => {
     modal.addEventListener('click', (e) => {
         if (e.target === modal) modal.classList.add('hidden');
     });
+});
+
+// View Navigation
+navAnalyzer.addEventListener('click', () => switchView('analyzer'));
+navGenerator.addEventListener('click', () => switchView('generator'));
+
+// Generator Logic
+generateJdBtn.addEventListener('click', handleGenerateJD);
+useJdBtn.addEventListener('click', transferGeneratedJD);
+resetGenBtn.addEventListener('click', resetGenerator);
+
+customRoleInput.addEventListener('input', () => {
+    if (customRoleInput.value.trim()) {
+        document.querySelectorAll('#role-grid .selection-card').forEach(c => c.classList.remove('active'));
+        selectedRole = customRoleInput.value.trim();
+    }
 });
 
 // --- Core Functions ---
@@ -268,6 +313,148 @@ function setLoading(isLoading) {
         spinner.classList.remove('hidden');
     } else {
         btnText.innerText = 'Analyze';
+        spinner.classList.add('hidden');
+    }
+}
+
+// --- Generator Functions ---
+
+function switchView(view) {
+    if (view === 'analyzer') {
+        analyzerView.classList.remove('hidden');
+        generatorView.classList.add('hidden');
+        navAnalyzer.classList.add('active-nav');
+        navGenerator.classList.remove('active-nav');
+    } else {
+        analyzerView.classList.add('hidden');
+        generatorView.classList.remove('hidden');
+        navAnalyzer.classList.remove('active-nav');
+        navGenerator.classList.add('active-nav');
+        if (industryGrid.children.length === 0) populateIndustries();
+    }
+}
+
+function populateIndustries() {
+    industryGrid.innerHTML = '';
+    Object.keys(industryData).forEach(industry => {
+        const card = document.createElement('div');
+        card.className = 'selection-card';
+        card.innerText = industry;
+        card.addEventListener('click', () => selectIndustry(industry, card));
+        industryGrid.appendChild(card);
+    });
+}
+
+function selectIndustry(industry, card) {
+    document.querySelectorAll('#industry-grid .selection-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    selectedIndustry = industry;
+    selectedRole = null;
+    customRoleInput.value = '';
+    
+    populateRoles(industry);
+    roleStep.classList.remove('hidden');
+    generatedResult.classList.add('hidden');
+    
+    roleStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function populateRoles(industry) {
+    roleGrid.innerHTML = '';
+    industryData[industry].forEach(role => {
+        const card = document.createElement('div');
+        card.className = 'selection-card';
+        card.innerText = role;
+        card.addEventListener('click', () => {
+            document.querySelectorAll('#role-grid .selection-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            selectedRole = role;
+            customRoleInput.value = '';
+        });
+        roleGrid.appendChild(card);
+    });
+}
+
+async function handleGenerateJD() {
+    const role = selectedRole || customRoleInput.value.trim();
+    if (!role) {
+        alert('Please select or type a job role.');
+        return;
+    }
+
+    setGenLoading(true);
+    try {
+        const jd = await fetchGeneratedJD(role, selectedIndustry);
+        generatedJdText.value = jd;
+        generatedResult.classList.remove('hidden');
+        generatedResult.scrollIntoView({ behavior: 'smooth' });
+    } catch (error) {
+        console.error('Generation failed:', error);
+        alert('Failed to generate job description.');
+    } finally {
+        setGenLoading(false);
+    }
+}
+
+async function fetchGeneratedJD(role, industry) {
+    const systemPrompt = `You are an expert technical recruiter. 
+    Generate a professional, comprehensive job description for the role provided.
+    Include sections for: Role Summary, Key Responsibilities, and Required Qualifications/Skills.
+    Keep it realistic and industry-standard. Do not include placeholders like [Company Name].`;
+
+    const userPrompt = `Role: ${role}${industry ? `\nIndustry: ${industry}` : ''}`;
+
+    const response = await fetch(GROQ_API_URL, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            model: "llama-3.3-70b-versatile",
+            messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: userPrompt }
+            ],
+            temperature: 0.7
+        })
+    });
+
+    if (!response.ok) throw new Error('API call failed');
+    const data = await response.json();
+    return data.choices[0].message.content;
+}
+
+function transferGeneratedJD() {
+    jdTextarea.value = generatedJdText.value;
+    switchView('analyzer');
+    jdTextarea.scrollIntoView({ behavior: 'smooth' });
+    
+    // Add a little pulse effect to the textarea to show it's updated
+    jdTextarea.style.boxShadow = '0 0 0 4px rgba(79, 70, 229, 0.3)';
+    setTimeout(() => jdTextarea.style.boxShadow = '', 2000);
+}
+
+function resetGenerator() {
+    selectedIndustry = null;
+    selectedRole = null;
+    customRoleInput.value = '';
+    document.querySelectorAll('.selection-card').forEach(c => c.classList.remove('active'));
+    roleStep.classList.add('hidden');
+    generatedResult.classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setGenLoading(isLoading) {
+    generateJdBtn.disabled = isLoading;
+    const btnText = generateJdBtn.querySelector('.btn-text');
+    const spinner = generateJdBtn.querySelector('.btn-spinner');
+    
+    if (isLoading) {
+        btnText.innerText = 'Generating...';
+        spinner.classList.remove('hidden');
+    } else {
+        btnText.innerText = 'Generate Description';
         spinner.classList.add('hidden');
     }
 }
