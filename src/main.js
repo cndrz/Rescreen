@@ -324,8 +324,11 @@ async function exportToPDF() {
     const originalText = exportPdfBtn.innerText;
     exportPdfBtn.innerText = 'Preparing...';
     
-    // Add PDF-specific class for styling
+    // Ensure the results section is visible and add PDF-specific class
     resultsSection.classList.add('pdf-export-mode');
+    
+    // Give the browser a moment to apply the styles
+    await new Promise(resolve => setTimeout(resolve, 500));
     
     const options = {
         margin: [10, 10],
@@ -334,13 +337,18 @@ async function exportToPDF() {
         html2canvas: { 
             scale: 2, 
             useCORS: true,
-            letterRendering: true
+            logging: false,
+            letterRendering: true,
+            windowWidth: resultsSection.scrollWidth,
+            windowHeight: resultsSection.scrollHeight
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
     try {
-        await html2pdf().set(options).from(resultsSection).save();
+        // Use a more explicit promise chain for html2pdf
+        const element = resultsSection;
+        await html2pdf().set(options).from(element).save();
     } catch (error) {
         console.error('PDF Export failed:', error);
         alert('Failed to generate PDF. Please try again.');

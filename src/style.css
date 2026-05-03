@@ -802,6 +802,11 @@ footer p {
     border: none !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    position: relative !important;
+    overflow: visible !important;
 }
 
 .pdf-export-mode .results-actions,
