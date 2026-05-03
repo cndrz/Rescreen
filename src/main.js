@@ -46,6 +46,7 @@ const weaknessesList = document.getElementById('weaknesses-list');
 const detailedFeedback = document.getElementById('detailed-feedback');
 const resetBtn = document.getElementById('reset-btn');
 const copyBtn = document.getElementById('copy-btn');
+const exportPdfBtn = document.getElementById('export-pdf-btn');
 
 // Modals
 const aboutBtn = document.getElementById('about-btn');
@@ -122,6 +123,8 @@ copyBtn.addEventListener('click', () => {
         setTimeout(() => copyBtn.innerText = originalText, 2000);
     });
 });
+
+exportPdfBtn.addEventListener('click', exportToPDF);
 
 // Toggle Buttons Logic
 depthBtns.forEach(btn => {
@@ -314,6 +317,36 @@ function setLoading(isLoading) {
     } else {
         btnText.innerText = 'Analyze';
         spinner.classList.add('hidden');
+    }
+}
+
+async function exportToPDF() {
+    const originalText = exportPdfBtn.innerText;
+    exportPdfBtn.innerText = 'Preparing...';
+    
+    // Add PDF-specific class for styling
+    resultsSection.classList.add('pdf-export-mode');
+    
+    const options = {
+        margin: [10, 10],
+        filename: `Rescreen_Analysis_${new Date().toISOString().slice(0,10)}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+            scale: 2, 
+            useCORS: true,
+            letterRendering: true
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    try {
+        await html2pdf().set(options).from(resultsSection).save();
+    } catch (error) {
+        console.error('PDF Export failed:', error);
+        alert('Failed to generate PDF. Please try again.');
+    } finally {
+        resultsSection.classList.remove('pdf-export-mode');
+        exportPdfBtn.innerText = originalText;
     }
 }
 

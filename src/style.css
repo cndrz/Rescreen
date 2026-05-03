@@ -794,6 +794,33 @@ footer p {
     font-weight: 500;
 }
 
+/* PDF Export Styles */
+.pdf-export-mode {
+    background: white !important;
+    color: black !important;
+    padding: 2rem !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+.pdf-export-mode .results-actions,
+.pdf-export-mode .results-header-minimal::before {
+    display: none !important;
+}
+
+.pdf-export-mode .score-pill {
+    background: #f3f4f6 !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+.pdf-export-mode .minimal-list div,
+.pdf-export-mode .result-section-card {
+    background: #f9fafb !important;
+    border: 1px solid #e5e7eb !important;
+    color: #374151 !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .detail-grid {
